@@ -16,5 +16,16 @@ public class SuperParkingLotBoyTest {
         ParkingTicket parkTicket = SuperParkingLotBoy.getParkingLots().getFirst().park(car);
         assertEquals(SuperParkingLotBoy.getParkingLots().getFirst().getCarToParkingTicket().get(car), parkTicket);
     }
+    @Test
+    void should_throw_exception_when_fetch_given_wrong_ticket() throws Exception {
+        SuperParkingLotBoy SuperParkingLotBoy = new SuperParkingLotBoy();
+        ParkingLot parkingLot = new ParkingLot();
+        SuperParkingLotBoy.setParkingLot(parkingLot);
+        Car car = new Car(1);
+        ParkingTicket parkTicket = SuperParkingLotBoy.getParkingLots().getFirst().park(car);
+        ParkingTicket wrongTicket = new ParkingTicket();
+        WrongTicketException wrongTicketException = assertThrows(WrongTicketException.class, ()->SuperParkingLotBoy.getParkingLots().getFirst().fetch(car, wrongTicket));
+        assertEquals("Wrong ticket", wrongTicketException.getMessage());
+    }
 
 }
