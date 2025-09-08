@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SuperParkingLotBoy extends ParkingLotBoy{
-
-    public ParkingTicket park(Car car) throws UnavailableParkingSpaceException {
+    @Override
+    public ParkingTicket park(Car car) throws Exception {
         return super.getParkingLots().stream()
                 .filter(parkingLot -> parkingLot.getREST_LOCATION() > 0)
                 .max(Comparator.comparingDouble(parkingLot ->

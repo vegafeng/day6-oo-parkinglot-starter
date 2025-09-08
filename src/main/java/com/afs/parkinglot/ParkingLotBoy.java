@@ -11,4 +11,7 @@ public class ParkingLotBoy {
     public void setParkingLot(ParkingLot parkingLot) {
         parkingLots.add(parkingLot);
     }
+    public ParkingTicket park(Car car)throws Exception{
+        return null;
+    }
 }

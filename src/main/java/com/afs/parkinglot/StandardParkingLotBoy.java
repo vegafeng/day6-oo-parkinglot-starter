@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StandardParkingLotBoy extends ParkingLotBoy {
-
-    public ParkingTicket park(Car car) throws UnavailableParkingSpaceException {
+    @Override
+    public ParkingTicket park(Car car) throws Exception {
         return super.getParkingLots().stream()
                 .filter(parkingLot -> parkingLot.getREST_LOCATION() > 0)
                 .findFirst()
