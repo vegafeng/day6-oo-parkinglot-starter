@@ -50,5 +50,25 @@ public class StandardParkingLotBoyTest {
         Car car2 = standardParkingLotBoy.getParkingLots().getFirst().fetch(car, parkTicket);
         assertEquals(car, car2);
     }
+    @Test
+    void should_throw_exception_when_park_given_full_parkingLot() throws Exception {
+        int MAX_PARKING_CARS = 10;
+        StandardParkingLotBoy standardParkingLotBoy = new StandardParkingLotBoy();
+        ParkingLot parkingLot = new ParkingLot();
+        standardParkingLotBoy.setParkingLot(parkingLot);
+        IntStream.rangeClosed(1, MAX_PARKING_CARS)
+                .mapToObj(Car::new)
+                .forEach(car -> parkCar(standardParkingLotBoy, car));
+        Car car = new Car(11);
+        UnavailableParkingSpaceException unavailableParkingSpaceException = assertThrows(UnavailableParkingSpaceException.class, ()->standardParkingLotBoy.getParkingLots().getFirst().park(car));
+        assertEquals("Parking Space Unavailable", unavailableParkingSpaceException.getMessage());
+    }
+    private void parkCar(StandardParkingLotBoy standardParkingLotBoy, Car car) {
+        try {
+            standardParkingLotBoy.getParkingLots().getFirst().park(car);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
