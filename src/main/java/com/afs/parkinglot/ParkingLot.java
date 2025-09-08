@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class ParkingLot {
     public static final int MAX_PARKING_CAR_NUMBER = 10;
-    private int id;
     private final Map<Car, ParkingTicket> carToParkingTicket = new HashMap<>();
     private int REST_LOCATION;
 
