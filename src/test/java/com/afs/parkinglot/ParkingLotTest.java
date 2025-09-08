@@ -2,11 +2,14 @@ package com.afs.parkinglot;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingLotTest {
+
     @Test
-    void should_return_ticket_when_park_given_car_parkingLot(){
+    void should_return_ticket_when_park_given_car_parkingLot() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car(1);
         Ticket parkTicket = parkingLot.park(car);
@@ -38,6 +41,25 @@ public class ParkingLotTest {
         Car car2 = parkingLot.fetch(car, parkTicket);
         assertEquals(car, car2);
     }
+    @Test
+    void should_throw_exception_when_park_given_full_parkingLot() throws Exception {
+        int MAX_PARKING_CARS = 10;
+        ParkingLot parkingLot = new ParkingLot();
+        IntStream.rangeClosed(1, MAX_PARKING_CARS)
+                .mapToObj(Car::new)
+                .forEach(car -> parkCar(parkingLot, car));
+        Car car = new Car(11);
+        UnavailableParkingSpaceException unavailableParkingSpaceException = assertThrows(UnavailableParkingSpaceException.class, ()->parkingLot.park(car));
+        assertEquals("Parking Space Unavailable", unavailableParkingSpaceException.getMessage());
+    }
+    private void parkCar(ParkingLot parkingLot, Car car) {
+        try {
+            parkingLot.park(car);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 
