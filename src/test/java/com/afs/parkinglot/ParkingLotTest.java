@@ -12,15 +12,15 @@ public class ParkingLotTest {
     void should_return_ticket_when_park_given_car_parkingLot() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car(1);
-        Ticket parkTicket = parkingLot.park(car);
-        assertEquals(parkingLot.getCarToTicket().get(car), parkTicket);
+        ParkingTicket parkTicket = parkingLot.park(car);
+        assertEquals(parkingLot.getCarToParkingTicket().get(car), parkTicket);
     }
     @Test
     void should_throw_exception_when_fetch_given_wrong_ticket() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car(1);
-        Ticket parkTicket = parkingLot.park(car);
-        Ticket wrongTicket = new Ticket();
+        ParkingTicket parkTicket = parkingLot.park(car);
+        ParkingTicket wrongTicket = new ParkingTicket();
         WrongTicketException wrongTicketException = assertThrows(WrongTicketException.class, ()->parkingLot.fetch(car, wrongTicket));
         assertEquals("Wrong ticket", wrongTicketException.getMessage());
     }
@@ -28,7 +28,7 @@ public class ParkingLotTest {
     void should_throw_exception_when_fetch_given_used_ticket() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car(1);
-        Ticket parkTicket = parkingLot.park(car);
+        ParkingTicket parkTicket = parkingLot.park(car);
         parkingLot.fetch(car, parkTicket);
         UsedTicketException usedTicketException = assertThrows(UsedTicketException.class, ()->parkingLot.fetch(car, parkTicket));
         assertEquals("Ticket is already used", usedTicketException.getMessage());
@@ -37,7 +37,7 @@ public class ParkingLotTest {
     void should_return_car_when_fetch_given_right_ticket() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car(1);
-        Ticket parkTicket = parkingLot.park(car);
+        ParkingTicket parkTicket = parkingLot.park(car);
         Car car2 = parkingLot.fetch(car, parkTicket);
         assertEquals(car, car2);
     }
@@ -64,8 +64,8 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot();
         Car car1 = new Car(1);
         Car car2 = new Car(2);
-        Ticket parkTicket1 = parkingLot.park(car1);
-        Ticket parkTicket2 = parkingLot.park(car2);
+        ParkingTicket parkTicket1 = parkingLot.park(car1);
+        ParkingTicket parkTicket2 = parkingLot.park(car2);
         assertEquals(car1, parkingLot.fetch(car1, parkTicket1));
         assertEquals(car2, parkingLot.fetch(car2, parkTicket2));
     }

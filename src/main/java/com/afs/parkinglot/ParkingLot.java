@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ParkingLot {
     private int id;
-    private final Map<Car, Ticket> carToTicket = new HashMap<>();
+    private final Map<Car, ParkingTicket> carToParkingTicket = new HashMap<>();
     private final static int MAX_PARKING_CAR_NUMBER = 10;
     private int REST_LOCATION;
 
@@ -15,22 +15,22 @@ public class ParkingLot {
         REST_LOCATION = 10;
     }
 
-    public Map<Car, Ticket> getCarToTicket() {
-        return carToTicket;
+    public Map<Car, ParkingTicket> getCarToParkingTicket() {
+        return carToParkingTicket;
     }
 
-    public Ticket park(Car car) throws Exception {
+    public ParkingTicket park(Car car) throws Exception {
         if (REST_LOCATION == 0) throw new UnavailableParkingSpaceException();
-        Ticket ticket = new Ticket();
-        carToTicket.put(car, ticket);
+        ParkingTicket ParkingTicket = new ParkingTicket();
+        carToParkingTicket.put(car, ParkingTicket);
         REST_LOCATION = REST_LOCATION - 1;
-        return ticket;
+        return ParkingTicket;
     }
 
-    public Car fetch(Car car, Ticket ticket) throws Exception {
-        if (ticket.getUsed_count() >= Ticket.MAX_USED_COUNT) throw new UsedTicketException();
-        if (!carToTicket.get(car).equals(ticket)) throw new WrongTicketException();
-        ticket.setUsed_count(ticket.getUsed_count()+1);
+    public Car fetch(Car car, ParkingTicket parkingTicket) throws Exception {
+        if (parkingTicket.getUsed_count() >= ParkingTicket.MAX_USED_COUNT) throw new UsedTicketException();
+        if (!carToParkingTicket.get(car).equals(parkingTicket)) throw new WrongTicketException();
+        parkingTicket.setUsed_count(parkingTicket.getUsed_count()+1);
         return car;
     }
 
