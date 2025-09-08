@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StandardParkingLotBoyTest {
 
@@ -58,18 +57,12 @@ public class StandardParkingLotBoyTest {
         standardParkingLotBoy.setParkingLot(parkingLot);
         IntStream.rangeClosed(1, MAX_PARKING_CARS)
                 .mapToObj(Car::new)
-                .forEach(car -> parkCar(standardParkingLotBoy, car));
+                .forEach(car -> parkCar(standardParkingLotBoy.getParkingLots().getFirst(), car));
         Car car = new Car(11);
         UnavailableParkingSpaceException unavailableParkingSpaceException = assertThrows(UnavailableParkingSpaceException.class, ()->standardParkingLotBoy.getParkingLots().getFirst().park(car));
         assertEquals("Parking Space Unavailable", unavailableParkingSpaceException.getMessage());
     }
-    private void parkCar(StandardParkingLotBoy standardParkingLotBoy, Car car) {
-        try {
-            standardParkingLotBoy.getParkingLots().getFirst().park(car);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     @Test
     void should_return_matching_car_when_fetch_given_right_ticket() throws Exception {
         StandardParkingLotBoy standardParkingLotBoy = new StandardParkingLotBoy();
@@ -81,6 +74,33 @@ public class StandardParkingLotBoyTest {
         ParkingTicket parkTicket2 = parkingLot.park(car2);
         assertEquals(car1, standardParkingLotBoy.getParkingLots().getFirst().fetch(car1, parkTicket1));
         assertEquals(car2, standardParkingLotBoy.getParkingLots().getFirst().fetch(car2, parkTicket2));
+    }
+
+    @Test
+    void should_park_car_by_order_when_park_given_cars() throws Exception {
+        int FIRST_MAX_PARKING_CARS = 6;
+        int SECOND_MAX_PARKING_CARS = 2;
+        StandardParkingLotBoy standardParkingLotBoy = new StandardParkingLotBoy();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+        standardParkingLotBoy.setParkingLot(parkingLot);
+        standardParkingLotBoy.setParkingLot(parkingLot2);
+        IntStream.rangeClosed(1, FIRST_MAX_PARKING_CARS)
+                .mapToObj(Car::new)
+                .forEach(car -> parkCar(standardParkingLotBoy.getParkingLots().getFirst(), car));
+        IntStream.rangeClosed(1, SECOND_MAX_PARKING_CARS)
+                .mapToObj(Car::new)
+                .forEach(car -> parkCar(standardParkingLotBoy.getParkingLots().get(1), car));
+        Car car = new Car(11);
+        standardParkingLotBoy.park(car);
+        assertTrue(standardParkingLotBoy.getParkingLots().getFirst().getCarToParkingTicket().containsKey(car));
+    }
+    private void parkCar(ParkingLot parkingLot, Car car) {
+        try {
+            parkingLot.park(car);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

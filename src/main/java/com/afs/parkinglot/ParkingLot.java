@@ -15,6 +15,10 @@ public class ParkingLot {
         REST_LOCATION = 10;
     }
 
+    public int getREST_LOCATION() {
+        return REST_LOCATION;
+    }
+
     public Map<Car, ParkingTicket> getCarToParkingTicket() {
         return carToParkingTicket;
     }

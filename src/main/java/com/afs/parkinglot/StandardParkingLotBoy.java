@@ -13,4 +13,18 @@ public class StandardParkingLotBoy {
     public void setParkingLot(ParkingLot parkingLot) {
         this.parkingLots.add(parkingLot);
     }
+    public ParkingTicket park(Car car) throws UnavailableParkingSpaceException {
+        return parkingLots.stream()
+                .filter(parkingLot -> parkingLot.getREST_LOCATION() > 0)
+                .findFirst()
+                .map(parkingLot -> {
+                    try {
+                        return parkingLot.park(car);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .orElseThrow(UnavailableParkingSpaceException::new);
+    }
+
 }
