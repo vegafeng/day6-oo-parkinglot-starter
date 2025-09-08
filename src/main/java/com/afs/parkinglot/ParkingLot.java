@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ParkingLot {
+    public static final int MAX_PARKING_CAR_NUMBER = 10;
     private int id;
     private final Map<Car, ParkingTicket> carToParkingTicket = new HashMap<>();
-    private final static int MAX_PARKING_CAR_NUMBER = 10;
     private int REST_LOCATION;
 
     public ParkingLot() {
@@ -25,16 +25,17 @@ public class ParkingLot {
 
     public ParkingTicket park(Car car) throws Exception {
         if (REST_LOCATION == 0) throw new UnavailableParkingSpaceException();
-        ParkingTicket ParkingTicket = new ParkingTicket();
-        carToParkingTicket.put(car, ParkingTicket);
+        ParkingTicket parkingTicket = new ParkingTicket();
+        carToParkingTicket.put(car, parkingTicket);
         REST_LOCATION = REST_LOCATION - 1;
-        return ParkingTicket;
+        return parkingTicket;
     }
 
     public Car fetch(Car car, ParkingTicket parkingTicket) throws Exception {
         if (parkingTicket.getUsed_count() >= ParkingTicket.MAX_USED_COUNT) throw new UsedTicketException();
         if (!carToParkingTicket.get(car).equals(parkingTicket)) throw new WrongTicketException();
         parkingTicket.setUsed_count(parkingTicket.getUsed_count()+1);
+        REST_LOCATION = REST_LOCATION + 1;
         return car;
     }
 
