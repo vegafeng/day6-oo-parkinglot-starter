@@ -4,18 +4,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class SuperParkingLotBoy {
-    private List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
-    public List<ParkingLot> getParkingLots() {
-        return parkingLots;
-    }
-    public void setParkingLot(ParkingLot parkingLot) {
-        parkingLots.add(parkingLot);
-    }
+public class SuperParkingLotBoy extends ParkingLotBoy{
 
     public ParkingTicket park(Car car) throws UnavailableParkingSpaceException {
-        int restLocation = parkingLots.getFirst().getREST_LOCATION();
-        return parkingLots.stream()
+        return super.getParkingLots().stream()
                 .filter(parkingLot -> parkingLot.getREST_LOCATION() > 0)
                 .max(Comparator.comparingDouble(parkingLot ->
                         (double) parkingLot.getREST_LOCATION() / ParkingLot.MAX_PARKING_CAR_NUMBER))
