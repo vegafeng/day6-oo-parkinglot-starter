@@ -30,7 +30,14 @@ public class ParkingLotTest {
         UsedTicketException usedTicketException = assertThrows(UsedTicketException.class, ()->parkingLot.fetch(car, parkTicket));
         assertEquals("Ticket is already used", usedTicketException.getMessage());
     }
-
+    @Test
+    void should_return_car_when_fetch_given_right_ticket() throws Exception {
+        ParkingLot parkingLot = new ParkingLot();
+        Car car = new Car(1);
+        Ticket parkTicket = parkingLot.park(car);
+        Car car2 = parkingLot.fetch(car, parkTicket);
+        assertEquals(car, car2);
+    }
 
 
 
