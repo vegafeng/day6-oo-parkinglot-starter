@@ -11,14 +11,14 @@ public class ParkingLotTest {
     @Test
     void should_return_ticket_when_park_given_car_parkingLot() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
-        Car car = new Car(1);
+        Car car = new Car();
         ParkingTicket parkTicket = parkingLot.park(car);
         assertEquals(parkingLot.getCarToParkingTicket().get(car), parkTicket);
     }
     @Test
     void should_throw_exception_when_fetch_given_wrong_ticket() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
-        Car car = new Car(1);
+        Car car = new Car();
         ParkingTicket parkTicket = parkingLot.park(car);
         ParkingTicket wrongTicket = new ParkingTicket();
         WrongTicketException wrongTicketException = assertThrows(WrongTicketException.class, ()->parkingLot.fetch(car, wrongTicket));
@@ -27,7 +27,7 @@ public class ParkingLotTest {
     @Test
     void should_throw_exception_when_fetch_given_used_ticket() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
-        Car car = new Car(1);
+        Car car = new Car();
         ParkingTicket parkTicket = parkingLot.park(car);
         parkingLot.fetch(car, parkTicket);
         UsedTicketException usedTicketException = assertThrows(UsedTicketException.class, ()->parkingLot.fetch(car, parkTicket));
@@ -36,7 +36,7 @@ public class ParkingLotTest {
     @Test
     void should_return_car_when_fetch_given_right_ticket() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
-        Car car = new Car(1);
+        Car car = new Car();
         ParkingTicket parkTicket = parkingLot.park(car);
         Car car2 = parkingLot.fetch(car, parkTicket);
         assertEquals(car, car2);
@@ -46,9 +46,9 @@ public class ParkingLotTest {
         int MAX_PARKING_CARS = 10;
         ParkingLot parkingLot = new ParkingLot();
         IntStream.rangeClosed(1, MAX_PARKING_CARS)
-                .mapToObj(Car::new)
+                .mapToObj(car -> new Car())
                 .forEach(car -> parkCar(parkingLot, car));
-        Car car = new Car(11);
+        Car car = new Car();
         UnavailableParkingSpaceException unavailableParkingSpaceException = assertThrows(UnavailableParkingSpaceException.class, ()->parkingLot.park(car));
         assertEquals("Parking Space Unavailable", unavailableParkingSpaceException.getMessage());
     }
@@ -62,8 +62,8 @@ public class ParkingLotTest {
     @Test
     void should_return_matching_car_when_fetch_given_right_ticket() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
-        Car car1 = new Car(1);
-        Car car2 = new Car(2);
+        Car car1 = new Car();
+        Car car2 = new Car();
         ParkingTicket parkTicket1 = parkingLot.park(car1);
         ParkingTicket parkTicket2 = parkingLot.park(car2);
         assertEquals(car1, parkingLot.fetch(car1, parkTicket1));

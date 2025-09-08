@@ -12,7 +12,7 @@ public class SuperParkingLotBoyTest {
         SuperParkingLotBoy SuperParkingLotBoy = new SuperParkingLotBoy();
         ParkingLot parkingLot = new ParkingLot();
         SuperParkingLotBoy.setParkingLot(parkingLot);
-        Car car = new Car(1);
+        Car car = new Car();
         ParkingTicket parkTicket = SuperParkingLotBoy.getParkingLots().getFirst().park(car);
         assertEquals(SuperParkingLotBoy.getParkingLots().getFirst().getCarToParkingTicket().get(car), parkTicket);
     }
@@ -21,7 +21,7 @@ public class SuperParkingLotBoyTest {
         SuperParkingLotBoy SuperParkingLotBoy = new SuperParkingLotBoy();
         ParkingLot parkingLot = new ParkingLot();
         SuperParkingLotBoy.setParkingLot(parkingLot);
-        Car car = new Car(1);
+        Car car = new Car();
         ParkingTicket parkTicket = SuperParkingLotBoy.getParkingLots().getFirst().park(car);
         ParkingTicket wrongTicket = new ParkingTicket();
         WrongTicketException wrongTicketException = assertThrows(WrongTicketException.class, ()->SuperParkingLotBoy.getParkingLots().getFirst().fetch(car, wrongTicket));
@@ -32,7 +32,7 @@ public class SuperParkingLotBoyTest {
         SuperParkingLotBoy SuperParkingLotBoy = new SuperParkingLotBoy();
         ParkingLot parkingLot = new ParkingLot();
         SuperParkingLotBoy.setParkingLot(parkingLot);
-        Car car = new Car(1);
+        Car car = new Car();
         ParkingTicket parkTicket = SuperParkingLotBoy.getParkingLots().getFirst().park(car);
         SuperParkingLotBoy.getParkingLots().getFirst().fetch(car, parkTicket);
         UsedTicketException usedTicketException = assertThrows(UsedTicketException.class, ()->SuperParkingLotBoy.getParkingLots().getFirst().fetch(car, parkTicket));
@@ -43,7 +43,7 @@ public class SuperParkingLotBoyTest {
         SuperParkingLotBoy SuperParkingLotBoy = new SuperParkingLotBoy();
         ParkingLot parkingLot = new ParkingLot();
         SuperParkingLotBoy.setParkingLot(parkingLot);
-        Car car = new Car(1);
+        Car car = new Car();
         ParkingTicket parkTicket = SuperParkingLotBoy.getParkingLots().getFirst().park(car);
         Car car2 = SuperParkingLotBoy.getParkingLots().getFirst().fetch(car, parkTicket);
         assertEquals(car, car2);
@@ -56,9 +56,9 @@ public class SuperParkingLotBoyTest {
         ParkingLot parkingLot = new ParkingLot();
         SuperParkingLotBoy.setParkingLot(parkingLot);
         IntStream.rangeClosed(1, MAX_PARKING_CARS)
-                .mapToObj(Car::new)
+                .mapToObj(car -> new Car())
                 .forEach(car -> parkCar(SuperParkingLotBoy.getParkingLots().getFirst(), car));
-        Car car = new Car(11);
+        Car car = new Car();
         UnavailableParkingSpaceException unavailableParkingSpaceException = assertThrows(UnavailableParkingSpaceException.class, ()->SuperParkingLotBoy.getParkingLots().getFirst().park(car));
         assertEquals("Parking Space Unavailable", unavailableParkingSpaceException.getMessage());
     }
@@ -68,8 +68,8 @@ public class SuperParkingLotBoyTest {
         SuperParkingLotBoy SuperParkingLotBoy = new SuperParkingLotBoy();
         ParkingLot parkingLot = new ParkingLot();
         SuperParkingLotBoy.setParkingLot(parkingLot);
-        Car car1 = new Car(1);
-        Car car2 = new Car(2);
+        Car car1 = new Car();
+        Car car2 = new Car();
         ParkingTicket parkTicket1 = parkingLot.park(car1);
         ParkingTicket parkTicket2 = parkingLot.park(car2);
         assertEquals(car1, SuperParkingLotBoy.getParkingLots().getFirst().fetch(car1, parkTicket1));
@@ -85,12 +85,12 @@ public class SuperParkingLotBoyTest {
         SuperParkingLotBoy.setParkingLot(parkingLot);
         SuperParkingLotBoy.setParkingLot(parkingLot2);
         IntStream.rangeClosed(1, FIRST_MAX_PARKING_CARS)
-                .mapToObj(Car::new)
+                .mapToObj(car -> new Car())
                 .forEach(car -> parkCar(SuperParkingLotBoy.getParkingLots().getFirst(), car));
         IntStream.rangeClosed(1, SECOND_MAX_PARKING_CARS)
-                .mapToObj(Car::new)
+                .mapToObj(car -> new Car())
                 .forEach(car -> parkCar(SuperParkingLotBoy.getParkingLots().get(1), car));
-        Car car = new Car(11);
+        Car car = new Car();
         SuperParkingLotBoy.park(car);
         assertTrue(SuperParkingLotBoy.getParkingLots().get(1).getCarToParkingTicket().containsKey(car));
     }
