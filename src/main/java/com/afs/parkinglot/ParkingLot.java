@@ -14,6 +14,10 @@ public class ParkingLot {
     public ParkingLot() {
     }
 
+    public Map<Car, Ticket> getCarToTicket() {
+        return carToTicket;
+    }
+
     public Ticket park(Car car) {
         Ticket ticket = new Ticket();
         carToTicket.put(car, ticket);

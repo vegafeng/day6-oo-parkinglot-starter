@@ -10,7 +10,7 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car(1);
         Ticket parkTicket = parkingLot.park(car);
-        assertEquals(new Ticket(), parkTicket);
+        assertEquals(parkingLot.getCarToTicket().get(car), parkTicket);
     }
     @Test
     void should_return_null_when_fetch_given_wrong_ticket() throws Exception {
@@ -20,6 +20,7 @@ public class ParkingLotTest {
         Ticket wrongTicket = new Ticket();
         WrongTicketException wrongTicketException = assertThrows(WrongTicketException.class, ()->parkingLot.fetch(car, wrongTicket));
     }
+
 
 
 }
