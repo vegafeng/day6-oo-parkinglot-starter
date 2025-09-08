@@ -27,5 +27,17 @@ public class SuperParkingLotBoyTest {
         WrongTicketException wrongTicketException = assertThrows(WrongTicketException.class, ()->SuperParkingLotBoy.getParkingLots().getFirst().fetch(car, wrongTicket));
         assertEquals("Wrong ticket", wrongTicketException.getMessage());
     }
+    @Test
+    void should_throw_exception_when_fetch_given_used_ticket() throws Exception {
+        SuperParkingLotBoy SuperParkingLotBoy = new SuperParkingLotBoy();
+        ParkingLot parkingLot = new ParkingLot();
+        SuperParkingLotBoy.setParkingLot(parkingLot);
+        Car car = new Car(1);
+        ParkingTicket parkTicket = SuperParkingLotBoy.getParkingLots().getFirst().park(car);
+        SuperParkingLotBoy.getParkingLots().getFirst().fetch(car, parkTicket);
+        UsedTicketException usedTicketException = assertThrows(UsedTicketException.class, ()->SuperParkingLotBoy.getParkingLots().getFirst().fetch(car, parkTicket));
+        assertEquals("Ticket is already used", usedTicketException.getMessage());
+    }
+
 
 }
