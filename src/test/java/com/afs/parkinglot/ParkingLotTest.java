@@ -59,7 +59,16 @@ public class ParkingLotTest {
             throw new RuntimeException(e);
         }
     }
-
+    @Test
+    void should_return_matching_car_when_fetch_given_right_ticket() throws Exception {
+        ParkingLot parkingLot = new ParkingLot();
+        Car car1 = new Car(1);
+        Car car2 = new Car(2);
+        Ticket parkTicket1 = parkingLot.park(car1);
+        Ticket parkTicket2 = parkingLot.park(car2);
+        assertEquals(car1, parkingLot.fetch(car1, parkTicket1));
+        assertEquals(car2, parkingLot.fetch(car2, parkTicket2));
+    }
 
 
 
