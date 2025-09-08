@@ -26,7 +26,7 @@ public class ParkingLot {
     }
 
     public Car fetch(Car car, Ticket ticket) throws Exception {
-        if (ticket.getUsed_count() >= Ticket.MAX_USED_COUNT) return null;
+        if (ticket.getUsed_count() >= Ticket.MAX_USED_COUNT) throw new UsedTicketException();
         if (!carToTicket.containsKey(car)) throw new Exception("车位不存在");
         if (!carToTicket.get(car).equals(ticket)) throw new WrongTicketException();
         ticket.setUsed_count(ticket.getUsed_count()+1);
