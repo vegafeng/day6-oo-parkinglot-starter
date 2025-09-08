@@ -49,4 +49,29 @@ public class SuperParkingLotBoyTest {
         assertEquals(car, car2);
     }
 
+    @Test
+    void should_throw_exception_when_park_given_full_parkingLot() throws Exception {
+        int MAX_PARKING_CARS = 10;
+        SuperParkingLotBoy SuperParkingLotBoy = new SuperParkingLotBoy();
+        ParkingLot parkingLot = new ParkingLot();
+        SuperParkingLotBoy.setParkingLot(parkingLot);
+        IntStream.rangeClosed(1, MAX_PARKING_CARS)
+                .mapToObj(Car::new)
+                .forEach(car -> parkCar(SuperParkingLotBoy.getParkingLots().getFirst(), car));
+        Car car = new Car(11);
+        UnavailableParkingSpaceException unavailableParkingSpaceException = assertThrows(UnavailableParkingSpaceException.class, ()->SuperParkingLotBoy.getParkingLots().getFirst().park(car));
+        assertEquals("Parking Space Unavailable", unavailableParkingSpaceException.getMessage());
+    }
+
+
+
+
+    private void parkCar(ParkingLot parkingLot, Car car) {
+        try {
+            parkingLot.park(car);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
