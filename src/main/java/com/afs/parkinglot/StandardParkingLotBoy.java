@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StandardParkingLotBoy {
-    List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
+    private List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
 
     public List<ParkingLot> getParkingLots() {
         return parkingLots;
