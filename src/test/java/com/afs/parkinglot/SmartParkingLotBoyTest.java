@@ -62,6 +62,21 @@ public class SmartParkingLotBoyTest {
         assertEquals("Parking Space Unavailable", unavailableParkingSpaceException.getMessage());
     }
 
+    @Test
+    void should_return_matching_car_when_fetch_given_right_ticket() throws Exception {
+        SmartParkingLotBoy SmartParkingLotBoy = new SmartParkingLotBoy();
+        ParkingLot parkingLot = new ParkingLot();
+        SmartParkingLotBoy.setParkingLot(parkingLot);
+        Car car1 = new Car(1);
+        Car car2 = new Car(2);
+        ParkingTicket parkTicket1 = parkingLot.park(car1);
+        ParkingTicket parkTicket2 = parkingLot.park(car2);
+        assertEquals(car1, SmartParkingLotBoy.getParkingLots().getFirst().fetch(car1, parkTicket1));
+        assertEquals(car2, SmartParkingLotBoy.getParkingLots().getFirst().fetch(car2, parkTicket2));
+    }
+
+
+
 
     private void parkCar(ParkingLot parkingLot, Car car) {
         try {
