@@ -74,7 +74,25 @@ public class SmartParkingLotBoyTest {
         assertEquals(car1, SmartParkingLotBoy.getParkingLots().getFirst().fetch(car1, parkTicket1));
         assertEquals(car2, SmartParkingLotBoy.getParkingLots().getFirst().fetch(car2, parkTicket2));
     }
-
+    @Test
+    void should_park_car_by_order_when_park_given_cars() throws Exception {
+        int FIRST_MAX_PARKING_CARS = 6;
+        int SECOND_MAX_PARKING_CARS = 2;
+        SmartParkingLotBoy SmartParkingLotBoy = new SmartParkingLotBoy();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+        SmartParkingLotBoy.setParkingLot(parkingLot);
+        SmartParkingLotBoy.setParkingLot(parkingLot2);
+        IntStream.rangeClosed(1, FIRST_MAX_PARKING_CARS)
+                .mapToObj(Car::new)
+                .forEach(car -> parkCar(SmartParkingLotBoy.getParkingLots().getFirst(), car));
+        IntStream.rangeClosed(1, SECOND_MAX_PARKING_CARS)
+                .mapToObj(Car::new)
+                .forEach(car -> parkCar(SmartParkingLotBoy.getParkingLots().get(1), car));
+        Car car = new Car(11);
+        SmartParkingLotBoy.park(car);
+        assertTrue(SmartParkingLotBoy.getParkingLots().get(1).getCarToParkingTicket().containsKey(car));
+    }
 
 
 
