@@ -22,7 +22,7 @@ public class SmartParkingLotBoyTest {
         ParkingLot parkingLot = new ParkingLot();
         SmartParkingLotBoy.setParkingLot(parkingLot);
         Car car = new Car();
-        ParkingTicket parkTicket = SmartParkingLotBoy.getParkingLots().getFirst().park(car);
+        SmartParkingLotBoy.getParkingLots().getFirst().park(car);
         ParkingTicket wrongTicket = new ParkingTicket();
         WrongTicketException wrongTicketException = assertThrows(WrongTicketException.class, ()->SmartParkingLotBoy.getParkingLots().getFirst().fetch(car, wrongTicket));
         assertEquals("Wrong ticket", wrongTicketException.getMessage());

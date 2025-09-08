@@ -19,7 +19,7 @@ public class ParkingLotTest {
     void should_throw_exception_when_fetch_given_wrong_ticket() throws Exception {
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car();
-        ParkingTicket parkTicket = parkingLot.park(car);
+        parkingLot.park(car);
         ParkingTicket wrongTicket = new ParkingTicket();
         WrongTicketException wrongTicketException = assertThrows(WrongTicketException.class, ()->parkingLot.fetch(car, wrongTicket));
         assertEquals("Wrong ticket", wrongTicketException.getMessage());
