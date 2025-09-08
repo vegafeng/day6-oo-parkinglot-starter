@@ -1,9 +1,10 @@
 package com.afs.parkinglot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SmartParkingLotBoy {
-    private List<ParkingLot> parkingLots;
+    private List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
     public List<ParkingLot> getParkingLots() {
         return parkingLots;
     }

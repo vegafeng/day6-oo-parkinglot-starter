@@ -17,4 +17,5 @@ public class SmartParkingLotBoyTest {
         assertEquals(SmartParkingLotBoy.getParkingLots().getFirst().getCarToParkingTicket().get(car), parkTicket);
     }
 
+
 }
