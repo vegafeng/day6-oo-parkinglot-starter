@@ -95,6 +95,24 @@ public class StandardParkingLotBoyTest {
         standardParkingLotBoy.park(car);
         assertTrue(standardParkingLotBoy.getParkingLots().getFirst().getCarToParkingTicket().containsKey(car));
     }
+    @Test
+    void should_throw_exception_when_park_given_full_parkingLots() throws Exception {
+        int MAX_PARKING_CARS = 10;
+        StandardParkingLotBoy standardParkingLotBoy = new StandardParkingLotBoy();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+        standardParkingLotBoy.setParkingLot(parkingLot);
+        standardParkingLotBoy.setParkingLot(parkingLot2);
+        IntStream.rangeClosed(1, MAX_PARKING_CARS)
+                .mapToObj(CAR -> new Car())
+                .forEach(car -> parkCar(standardParkingLotBoy.getParkingLots().getFirst(), car));
+        IntStream.rangeClosed(1, MAX_PARKING_CARS)
+                .mapToObj(CAR -> new Car())
+                .forEach(car -> parkCar(standardParkingLotBoy.getParkingLots().get(1), car));
+        Car car = new Car();
+        UnavailableParkingSpaceException unavailableParkingSpaceException = assertThrows(UnavailableParkingSpaceException.class, ()->standardParkingLotBoy.park(car));
+        assertEquals("Parking Space Unavailable", unavailableParkingSpaceException.getMessage());
+    }
     private void parkCar(ParkingLot parkingLot, Car car) {
         try {
             parkingLot.park(car);
