@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ParkingLotBoy {
+public abstract class ParkingLotBoy {
     private List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
     public List<ParkingLot> getParkingLots() {
         return parkingLots;
@@ -12,9 +12,9 @@ public class ParkingLotBoy {
     public void setParkingLot(ParkingLot parkingLot) {
         parkingLots.add(parkingLot);
     }
-    public ParkingTicket park(Car car)throws Exception{
-        return null;
-    }
+
+    public abstract ParkingTicket park(Car car) throws Exception;
+
     public Car fetch(ParkingTicket parkingTicket)throws Exception{
         for (ParkingLot parkingLot : parkingLots) {
             if (parkingLot.getCarToParkingTicket().containsKey(parkingTicket)) {
