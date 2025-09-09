@@ -22,7 +22,7 @@ public class ParkingLotTest {
         parkingLot.park(car);
         ParkingTicket wrongTicket = new ParkingTicket();
         WrongTicketException wrongTicketException = assertThrows(WrongTicketException.class, ()->parkingLot.fetch(car, wrongTicket));
-        assertEquals("Wrong ticket", wrongTicketException.getMessage());
+        assertEquals(GlobalExceptionMSG.WRONG_TICKET_EXCEPTIONMSG, wrongTicketException.getMessage());
     }
     @Test
     void should_throw_exception_when_fetch_given_used_ticket() throws Exception {
@@ -31,7 +31,7 @@ public class ParkingLotTest {
         ParkingTicket parkTicket = parkingLot.park(car);
         parkingLot.fetch(car, parkTicket);
         UsedTicketException usedTicketException = assertThrows(UsedTicketException.class, ()->parkingLot.fetch(car, parkTicket));
-        assertEquals("Ticket is already used", usedTicketException.getMessage());
+        assertEquals(GlobalExceptionMSG.USED_TICKET_EXCEPTIONMSG, usedTicketException.getMessage());
     }
     @Test
     void should_return_car_when_fetch_given_right_ticket() throws Exception {
@@ -50,7 +50,7 @@ public class ParkingLotTest {
                 .forEach(car -> parkCar(parkingLot, car));
         Car car = new Car();
         UnavailableParkingSpaceException unavailableParkingSpaceException = assertThrows(UnavailableParkingSpaceException.class, ()->parkingLot.park(car));
-        assertEquals("Parking Space Unavailable", unavailableParkingSpaceException.getMessage());
+        assertEquals(GlobalExceptionMSG.UNAVAILABLE_PARKING_SPACE_EXCEPTIONMSG, unavailableParkingSpaceException.getMessage());
     }
     private void parkCar(ParkingLot parkingLot, Car car) {
         try {
