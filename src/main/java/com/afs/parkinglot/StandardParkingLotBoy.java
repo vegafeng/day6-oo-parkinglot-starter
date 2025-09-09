@@ -1,7 +1,5 @@
 package com.afs.parkinglot;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class StandardParkingLotBoy extends ParkingLotBoy {
     @Override
